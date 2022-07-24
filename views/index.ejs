@@ -8,5 +8,12 @@
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
     <p><%= locals.currentUser || "hello" %></p>
+    <div>
+      <% messages.forEach((message) => { %>
+      <div>
+        <span> <%= message.title %> </span>
+      </div>
+      <% }) %>
+    </div>
   </body>
 </html>
