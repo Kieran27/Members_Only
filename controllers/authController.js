@@ -45,6 +45,7 @@ exports.signup_post = [
     .trim()
     .escape()
     .normalizeEmail(),
+
   body("password")
     .isLength({ min: 8 })
     .withMessage(" Password must be 8 characters long")
@@ -54,9 +55,10 @@ exports.signup_post = [
     .withMessage("Password Must Contain an Uppercase Letter")
     .trim()
     .escape(),
+
   (req, res, next) => {
-    console.log(req.body);
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.render("signup", { errors: errors.array() });
     } else {
@@ -67,6 +69,7 @@ exports.signup_post = [
           if (err) {
             next(err);
           }
+
           const user = new User({
             username: req.body.email,
             password: hashedPassword,
@@ -85,3 +88,13 @@ exports.signup_post = [
 exports.signup_get = (req, res, next) => {
   res.render("signup");
 };
+
+exports.login_get = (req, res, next) => {
+  res.render("login");
+};
+
+exports.login_post = passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/login",
+  // failureFlash: true
+});

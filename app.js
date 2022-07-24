@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const User = require("./models/users");
 require("dotenv").config();
 
 // Establish Database Connection
@@ -48,29 +49,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/login", loginRouter);
-app.use("/sign-up", signupRouter);
-app.use("/createpost", createPostRouter);
-
 // Setup Local Strategy for Auth
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }, (err, user) => {
       if (err) {
+        console.log("cecile");
         return done(err);
       }
       if (!user) {
+        console.log("cecile");
         return done(null, false, { message: "Incorrect username" });
       }
       bcrypt.compare(password, user.password, (err, res) => {
+        console.log("cecile");
         if (err) return done(err);
         // Passwords match, log user in!
         if (res) return done(null, user);
         // Passwords do not match!
         else return done(null, false, { message: "Incorrect password" });
       });
-      return done(null, user);
     });
   })
 );
@@ -89,6 +87,17 @@ app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  console.log(res.locals);
+  next();
+});
+
+app.use("/", indexRouter);
+app.use("/login", loginRouter);
+app.use("/sign-up", signupRouter);
+app.use("/createpost", createPostRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
