@@ -63,13 +63,32 @@ passport.use(
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
       }
-      if (user.password !== password) {
-        return done(null, false, { message: "Incorrect password" });
-      }
+      bcrypt.compare(password, user.password, (err, res) => {
+        if (err) return done(err);
+        // Passwords match, log user in!
+        if (res) return done(null, user);
+        // Passwords do not match!
+        else return done(null, false, { message: "Incorrect password" });
+      });
       return done(null, user);
     });
   })
 );
+
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
+
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

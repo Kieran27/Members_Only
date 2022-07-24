@@ -1,10 +1,8 @@
 <header><%- include('./partials/header'); %></header>
-<form action="/sign-up" method="post">
-  <label for="username">Username:</label>
-  <input type="text" name="username" required />
+<form action="/sign-up" method="POST">
   <label for="email">Email:</label>
-  <input type="email" required />
+  <input id="email" type="email" name="email" />
   <label for="password">Password:</label>
-  <input type="password" name="password" required />
+  <input id="password" type="password" name="password" />
   <input type="submit" value="Sign Up!" />
 </form>
