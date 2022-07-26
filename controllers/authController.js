@@ -2,6 +2,7 @@ const User = require("../models/users");
 const { body, check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+require("dotenv").config();
 
 const signupValidate = [
   // Check username is a valid email address
@@ -98,3 +99,19 @@ exports.login_post = passport.authenticate("local", {
   failureRedirect: "/login",
   // failureFlash: true
 });
+
+exports.secret_get = (req, res, next) => {
+  res.render("secret");
+};
+
+exports.secret_post = async (req, res, next) => {
+  const passcode = process.env.SECRET_PASSCODE;
+  console.log(res.locals.currentUser);
+  if (req.body.passcode === passcode) {
+    console.log("Success!");
+    const user = await User.findByIdAndUpdate(res.locals.currentUser._id, {
+      memberStatus: true,
+    });
+  }
+  res.redirect("/secret");
+};

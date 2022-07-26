@@ -8,7 +8,6 @@ exports.createpost_post = [
   body("postbody").exists().trim().escape(),
   (req, res, next) => {
     const errors = validationResult(req);
-    console.log(req.user);
     const message = new Message({
       title: req.body.posttitle,
       content: req.body.postbody,

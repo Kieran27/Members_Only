@@ -1,7 +1,21 @@
-<form action="/createpost" method="POST">
-  <label for="posttitle">Post Tile:</label>
-  <input type="text" name="posttitle" required />
-  <label for="postbody">Message:</label>
-  <input type="text" name="postbody" />
-  <input type="submit" value="Post!" />
-</form>
+<header><%- include('./partials/header'); %></header>
+<div class="wrapper">
+  <div class="auth-container">
+    <h2>Create A Post!</h2>
+    <div class="auth-container-form-container">
+      <form action="/createpost" method="POST">
+        <div class="form-input-container">
+          <label for="posttitle">Post Tile:</label>
+          <input type="text" name="posttitle" required />
+        </div>
+        <div class="form-input-container">
+          <label for="postbody">Message:</label>
+          <textarea name="postbody" cols="30" rows="10"></textarea>
+        </div>
+        <div class="input-submit-container">
+          <input type="submit" value="Post!" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

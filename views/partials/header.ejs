@@ -1,20 +1,32 @@
-<div class="left-col">
-  <h1>
-    <a href="/">Members Only</a>
-  </h1>
-</div>
-<div class="right-col">
-  <ul>
-    <li>
-      <a href="/login">Login</a>
-    </li>
-    <li>
-      <a href="/sign-up">Sign-Up</a>
-    </li>
-    <% if (locals.currentUser) { %>
-    <li>
-      <a href="/createpost">Create Post</a>
-    </li>
-    <%} %>
-  </ul>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div class="left-col">
+      <h1>
+        <a href="/">Members Only</a>
+      </h1>
+    </div>
+    <div class="right-col">
+      <ul>
+        <li>
+          <a href="/login">Login</a>
+        </li>
+        <li>
+          <a href="/sign-up">Sign-Up</a>
+        </li>
+        <% if (locals.currentUser) { %>
+        <li>
+          <a href="/createpost">Create Post</a>
+        </li>
+        <li>
+          <a href="/secret"> Become a Member!</a>
+        </li>
+        <%} %>
+      </ul>
+    </div>
+  </body>
+</html>

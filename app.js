@@ -35,6 +35,7 @@ const indexRouter = require("./routes/index");
 const loginRouter = require("./routes/login");
 const signupRouter = require("./routes/signup");
 const createPostRouter = require("./routes/createPost");
+const secretRouter = require("./routes/secret");
 
 const app = express();
 
@@ -54,15 +55,12 @@ passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }, (err, user) => {
       if (err) {
-        console.log("cecile");
         return done(err);
       }
       if (!user) {
-        console.log("cecile");
         return done(null, false, { message: "Incorrect username" });
       }
       bcrypt.compare(password, user.password, (err, res) => {
-        console.log("cecile");
         if (err) return done(err);
         // Passwords match, log user in!
         if (res) return done(null, user);
@@ -90,7 +88,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
-  console.log(res.locals);
   next();
 });
 
@@ -98,6 +95,7 @@ app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/sign-up", signupRouter);
 app.use("/createpost", createPostRouter);
+app.use("/secret", secretRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
