@@ -47,6 +47,12 @@ exports.signup_post = [
     .escape()
     .normalizeEmail(),
 
+  body("username", "Must be a valid username")
+    .isLength({ min: 8 })
+    .withMessage(" Username must be 8 characters long!")
+    .exists()
+    .trim(),
+
   body("password")
     .isLength({ min: 8 })
     .withMessage(" Password must be 8 characters long")
@@ -72,7 +78,8 @@ exports.signup_post = [
           }
 
           const user = new User({
-            username: req.body.email,
+            email: req.body.email,
+            username: req.body.username,
             password: hashedPassword,
           }).save((err) => {
             if (err) {
@@ -108,10 +115,21 @@ exports.secret_post = async (req, res, next) => {
   const passcode = process.env.SECRET_PASSCODE;
   console.log(res.locals.currentUser);
   if (req.body.passcode === passcode) {
-    console.log("Success!");
     const user = await User.findByIdAndUpdate(res.locals.currentUser._id, {
       memberStatus: true,
     });
+    res.redirect("/");
+  } else {
+    const error = "Wrong Passcode!";
+    res.render("/secret", { error: error });
   }
-  res.redirect("/secret");
+};
+
+exports.logout_get = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 };

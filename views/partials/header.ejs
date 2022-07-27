@@ -12,9 +12,15 @@
     </div>
     <div class="right-col">
       <ul>
+        <% if (locals.currentUser) { %>
         <li>
-          <a href="/login">Login</a>
+          <a href="logout">Logout</a>
         </li>
+        <% } else { %>
+        <li>
+          <a href="login">Login</a>
+        </li>
+        <% } %>
         <li>
           <a href="/sign-up">Sign-Up</a>
         </li>

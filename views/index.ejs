@@ -11,43 +11,28 @@
           <% messages.forEach((message) => { %>
           <div class="message">
             <div class="message-header">
-              <% if (!locals.currentUser) { %>
+              <% if (!currentUser) { %>
               <h3>Login to See!</h3>
               <% } else { %>
               <h3><%= message.title %></h3>
               <% } %>
             </div>
             <div class="message-body">
-              <% if (!locals.currentUser) { %>
+              <% if (!currentUser) { %>
               <p>Login To See</p>
               <% } else { %>
               <p><%= message.content %></p>
               <% } %>
             </div>
             <div class="message-footer">
-              <% if (!locals.currentUser || !locals.currentUser.memberStatus) {
-              %>
+              <% if (!currentUser || !currentUser.memberStatus) { %>
               <span>Become a Member to See!</span>
               <span>Become a Member to See!</span>
               <% } else { %>
               <span><%=message.author %></span>
-              <span><%=message.createdAt %></span>
+              <span><%=message.formattedDate %></span>
               <% } %>
             </div>
-          </div>
-          <% }) %>
-        </div>
-
-        <div>
-          <% messages.forEach((message) => { %>
-          <div>
-            <% if (!locals.currentUser) { %>
-            <span> Log in To See This! </span>
-            <% } else { %>
-            <span> <%= message.title %> </span>
-            <span> <%= message.formattedDate %> </span>
-            <span> <%= message.createdAt %> </span>
-            <% } %>
           </div>
           <% }) %>
         </div>

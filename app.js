@@ -36,6 +36,7 @@ const loginRouter = require("./routes/login");
 const signupRouter = require("./routes/signup");
 const createPostRouter = require("./routes/createPost");
 const secretRouter = require("./routes/secret");
+const logoutRouter = require("./routes/logout");
 
 const app = express();
 
@@ -88,6 +89,9 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  if (req.user) {
+    console.log(req.user.username);
+  }
   next();
 });
 
@@ -96,6 +100,7 @@ app.use("/login", loginRouter);
 app.use("/sign-up", signupRouter);
 app.use("/createpost", createPostRouter);
 app.use("/secret", secretRouter);
+app.use("/logout", logoutRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

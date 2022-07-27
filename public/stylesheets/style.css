@@ -52,6 +52,19 @@ footer {
   margin: 0 auto;
 }
 
+header .right-col ul {
+  display: flex;
+  gap: 0.75rem;
+}
+
+header .right-col ul li {
+  list-style-type: none;
+}
+
+header .right-col ul li a:hover {
+  opacity: 0.75;
+}
+
 .auth-container {
   display: flex;
   flex-direction: column;
@@ -147,6 +160,7 @@ footer {
 }
 
 .messages-grid {
+  margin-top: 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
